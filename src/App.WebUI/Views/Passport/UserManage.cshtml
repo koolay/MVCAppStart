@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Manage user"; 
+}
+
+@using  App.Models.Passport;
+@model UserManageModel
+<div>
+    <h4>all accounts</h4>
+    <table class="table table-hover">
+        <thead >
+            <tr class ="tb-head">
+                <td>username</td>
+                <td>password</td>
+                <td>todo</td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var account in Model.UserList)
+                {
+                    <tr>
+                        <td>@account.UserName</td>
+                        <td>@account.Password</td>
+                        <td><a onclick="javascript:return confirm('are you sure？')"  href="@Url.Action("Delete", "Passport", new { id=account.Id})" target="_self"><i class="icon-remove"></i>remove</a></td>
+                    </tr>
+                }
+            }            
+        </tbody>
+    </table>
+</div>

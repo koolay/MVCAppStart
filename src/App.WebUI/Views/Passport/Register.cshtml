@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Join In"; 
+}
+
+<fieldset class="col-md-8">
+    <legend>Join In</legend>
+    <div>
+        <form class="form" method="post">
+            <div class="form-group">
+                <label  class="control-label">
+                    username</label> 
+                <input type="text" class="form-control"  name="UserName" required/>                
+            </div>
+            <div class="form-group">
+                <label  class="control-label">
+                    displayName</label> 
+                <input type="text" class="form-control"  name="DisplayName" required/>                
+            </div>
+            <div class="form-group">
+                <label  class="control-label">
+                    Password</label> 
+                    <input type="password"  class="form-control"  name="Password" required/> 
+            </div>
+             <div class="form-group">
+                <label  class="control-label">
+                   Confirm  Password</label> 
+                    <input type="password"  class="form-control"  name="ConfirmPassword" required/> 
+            </div>
+             <div class="form-group"> 
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">
+                        Sign up</button>  
+             </div>
+        </form>
+    </div>
+</fieldset>

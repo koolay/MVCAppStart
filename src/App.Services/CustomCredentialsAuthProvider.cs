@@ -43,10 +43,9 @@ namespace App.Services
                 if (user!=null)
                 {
                     var session = (CustomUserSession)authService.GetSession(false);
-                   
+                    session.UserName = user.UserName;
                     session.DisplayName = user.DisplayName;
-                    session.IsAuthenticated = true;
-                    
+                    session.IsAuthenticated = true;                    
                                       
                   //  session.Roles = new List<string>();
                 //    if (session.DisplayName == "admin") session.Roles.Add(RoleNames.Admin);
@@ -70,7 +69,7 @@ namespace App.Services
             //Important: You need to save the session!
             session.IsAuthenticated = true;
             session.UserName = session.UserAuthName;
-
+            session.DisplayName = session.DisplayName;
             authService.SaveSession(session, SessionExpiry); 
             
         }

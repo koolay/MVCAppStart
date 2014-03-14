@@ -141,7 +141,7 @@ namespace App.WebUI.Controllers
         public ActionResult Delete(string id)
         {
             this.UserService.Delete(id);
-            return View();
+            return RedirectToAction("UserManage", "Passport");
         }
 
     }

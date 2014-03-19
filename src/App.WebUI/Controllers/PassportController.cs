@@ -10,6 +10,9 @@ using App.Extensions;
 using App.ServicesInterface;
 using App.Models.Passport;
 using App.Entities;
+using App.WebUI.Mailers;
+using App.Models.Email;
+using ServiceStack.Common;
 
 
 namespace App.WebUI.Controllers
@@ -18,6 +21,7 @@ namespace App.WebUI.Controllers
     {
         public IUsersManageService UserService { get; set; }
         public ILoginService LoginService { get; set; }
+        public IUserMailer UserMailer { get; set; }
 
         [HttpPost]
         public ActionResult Login(LoginModel model, string next)
@@ -31,9 +35,9 @@ namespace App.WebUI.Controllers
             const string TEXT_PASSPORT_ERROR = "Incorrect username or password.";
             const string TEXT_PASSPORT_SUCCESS = "Login Success.";
             EmLoginValidStatus loginStatus = EmLoginValidStatus.Success;
-            
+
             loginStatus = LoginService.Login(model.UserName, model.Password, model.Remember);
-           
+
             if (loginStatus == EmLoginValidStatus.Success)
             {
                 this.Flash(new FlashMsg()
@@ -41,7 +45,7 @@ namespace App.WebUI.Controllers
                     Text = TEXT_PASSPORT_SUCCESS,
                     Type = emMessageType.Success
                 });
-                return this.RedirectNext(next);               
+                return this.RedirectNext(next);
             }
             else
             {
@@ -52,7 +56,7 @@ namespace App.WebUI.Controllers
                 });
                 return View(model);
             }
-           
+
         }
 
         [HttpGet]
@@ -64,13 +68,12 @@ namespace App.WebUI.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-
             return View();
         }
 
         [HttpPost]
         public ActionResult Register(RegisterModel model, string next)
-        {          
+        {
             if (!ModelState.IsValid)
             {
                 this.FlashModelStatusError();
@@ -120,7 +123,7 @@ namespace App.WebUI.Controllers
                 return View();
 
         }
-    
+
         [HttpGet]
         public ActionResult Logout()
         {
@@ -137,12 +140,111 @@ namespace App.WebUI.Controllers
             return View(model);
         }
 
-         [HttpGet]
+        [HttpGet]
         public ActionResult Delete(string id)
         {
             this.UserService.Delete(id);
             return RedirectToAction("UserManage", "Passport");
         }
 
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {            
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult ResetPassword(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                this.Flash(new FlashMsg()
+                {
+                    Text = "unvalid email",
+                    Type = emMessageType.Error
+                    
+                });
+                return View();
+            }
+            if (!this.UserService.IsExistsUserName(email))
+            {
+                this.Flash(new FlashMsg()
+                    {
+                         Text = "email is not exits",
+                         Type= emMessageType.Error
+                    });
+                return View();
+            }
+            
+            string enToken = CryptUtils.Encrypt(string.Format("{0}${1}", email, DateTime.Now.ToFileTime()));
+            string deToken = CryptUtils.Decrypt(enToken);
+            string[] tokenSplits = deToken.Split(new char[] { '$' });
+            this.UserMailer.PasswordReset(new PasswordResetMailModel()
+            {
+                ActiveUrl = Url.Action("ChangePassword","Passport", new  {token=enToken}),
+                Receiver = email,
+                Title = "Password Reset"
+            });
+            
+            this.Flash(new FlashMsg()
+            {
+                Text = "we have send an email  for you",
+                Type = emMessageType.Success
+            });          
+           
+            return RedirectToAction("ResetPassword"); 
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword(string token)
+        {
+            try
+            {
+                string deToken = CryptUtils.Decrypt(token);
+                string[] tokenSplits = deToken.Split(new char[] { '$' });
+                string email = tokenSplits[0];
+                string when = tokenSplits[1];
+                var whenTime = DateTime.FromFileTime(long.Parse(when));
+                if (DateTime.Now.Subtract(whenTime).TotalMinutes > 24 * 60)
+                {
+                    this.Flash(new FlashMsg()
+                    {
+                        Text = "The token is timeout",
+                        Type = emMessageType.Error
+                    });
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Flash(new FlashMsg()
+                {
+                     Text = "unvalid token",
+                     Type= emMessageType.Error
+                });
+                return View();
+            }            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                this.FlashModelStatusError();
+                return View();
+            }
+            else
+            {
+                this.UserService.ChangeUserPassword(model.UserName, model.NewPassword);
+                this.Flash(new FlashMsg()
+                {
+                    Text = "success. Your password have a new password.",
+                    Type = emMessageType.Success
+                });
+                return RedirectToAction("Login");
+            }
+        }
     }
 }

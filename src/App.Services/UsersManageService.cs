@@ -12,18 +12,18 @@ namespace App.Services
     {
         public  List<Account> GetAllUsers()
         {
-            var userList = DBHelper.DB.Select<Account>().OrderByDescending(c => c.Id).ToList();
+            var userList = this.Db.Select<Account>().OrderByDescending(c => c.Id).ToList();
             return userList;
         }
 
         public  void Delete(string id)
         {
-            DBHelper.DB.DeleteById<Account>(id);         
+            this.Db.DeleteById<Account>(id);         
         }
 
         public  EmRegisterStatus Register(Account newAccount)
         {
-            if (DBHelper.DB.Count<Account>(c => c.UserName == newAccount.UserName) > 0)
+            if (this.Db.Count<Account>(c => c.UserName == newAccount.UserName) > 0)
             {
                 return EmRegisterStatus.AccountExist;
             }
@@ -31,7 +31,7 @@ namespace App.Services
             {
                 try
                 {
-                    DBHelper.DB.Insert<Account>(new Account() { UserName = newAccount.UserName, Password = newAccount.Password, DisplayName=newAccount.DisplayName});
+                    this.Db.Insert<Account>(new Account() { UserName = newAccount.UserName, Password = newAccount.Password, DisplayName=newAccount.DisplayName});
                     return EmRegisterStatus.Success;
                 }
                 catch (Exception ex)
@@ -42,6 +42,21 @@ namespace App.Services
             }
             
         }
+        
+        public bool IsExistsUserName(string userName)
+        {
+            return this.Db.Count<Account>(c => c.UserName == userName) > 0;
+        }
 
+
+        public bool ChangeUserPassword(string userName, string newPassword)
+        {
+            if (this.IsExistsUserName(userName))
+            {
+                this.Db.Update<Account>("set Password='{0}' ".Params(newPassword), "where UserName='{1}'".Params(userName));
+                return true;
+            }
+            return false;
+        }
     }
 }

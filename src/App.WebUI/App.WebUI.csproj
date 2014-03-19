@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\lib\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\lib\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -42,6 +48,9 @@
     </Reference>
     <Reference Include="Mono.Security">
       <HintPath>..\..\lib\packages\Npgsql.2.0.14.3\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\..\lib\packages\MvcMailer.4.0\lib\40\Mvc.Mailer.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -164,6 +173,8 @@
     <Compile Include="LightInject\LightInject.cs" />
     <Compile Include="LightInject\Mvc\LightInject.Mvc.cs" />
     <Compile Include="LightInject\Web\LightInject.Web.cs" />
+    <Compile Include="Mailers\IUserMailer.cs" />
+    <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Mvc.Bundler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -845,7 +856,6 @@
     <Content Include="Content\js\jquery.widget.min.js" />
     <Content Include="Content\js\respond.min.js" />
     <Content Include="Global.asax" />
-    <Content Include="README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -861,7 +871,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\NLog.config" />
@@ -1071,6 +1083,9 @@
     <Content Include="Views\Passport\Login.cshtml" />
     <Content Include="Views\Passport\Register.cshtml" />
     <Content Include="Views\Passport\UserManage.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\UserMailer\PasswordResetMail.cshtml" />
+    <Content Include="Views\Passport\ResetPassword.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

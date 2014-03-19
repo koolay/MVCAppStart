@@ -6,6 +6,7 @@ using App.WebUI.App_Start;
 using ServiceStack.MiniProfiler;
 using ServiceStack.Logging;
 using ServiceStack.Logging.NLogger;
+using ServiceStack.Common;
 
 namespace App.WebUI
 {
@@ -14,6 +15,8 @@ namespace App.WebUI
 
         protected void Application_Start()
         {
+            CryptUtils.Length = RsaKeyLengths.Bit1024;
+            CryptUtils.KeyPair = CryptUtils.CreatePublicAndPrivateKeyPair();
             AreaRegistration.RegisterAllAreas();
             
             WebApiConfig.Register(GlobalConfiguration.Configuration);

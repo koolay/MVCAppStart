@@ -12,6 +12,10 @@ namespace App.ServicesInterface
 
         void Delete(string id);
 
+        bool ChangeUserPassword(string userName, string newPassword);
+
         EmRegisterStatus Register(Account newAccount);
+
+        bool IsExistsUserName(string userName);
     }
 }

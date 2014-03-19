@@ -5,7 +5,7 @@ using System.Text;
 
 namespace App.Utils
 {
-    public class Class1
+    class Class1
     {
     }
 }

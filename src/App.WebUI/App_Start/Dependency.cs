@@ -11,6 +11,7 @@ using ServiceStack.Configuration;
 using App.WebUI.Controllers;
 using App.Services;
 using App.ServicesInterface;
+using App.WebUI.Mailers;
 
 namespace App.WebUI.App_Start
 {
@@ -27,6 +28,7 @@ namespace App.WebUI.App_Start
 
             container.Register<IUsersManageService>(s => new UsersManageService());
             container.Register<ILoginService>(s => new LoginService());
+            container.Register<IUserMailer>(u => new UserMailer());
         }
     }
 }

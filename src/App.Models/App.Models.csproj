@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="Home\IndexModel.cs" />
     <Compile Include="Home\TopNavModel.cs" />
+    <Compile Include="Passport\ChangePasswordModel.cs" />
     <Compile Include="Passport\LoginModel.cs" />
+    <Compile Include="Email\PasswordResetMailModel.cs" />
     <Compile Include="Passport\RegisterModel.cs" />
     <Compile Include="Passport\UserManageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

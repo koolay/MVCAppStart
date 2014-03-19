@@ -52,5 +52,11 @@ namespace App.Services
             apiAuthService.Post(new Auth() { provider = "logout" });
             FormsAuthentication.SignOut();
         }
+
+
+        public bool IsLogined()
+        {
+           return  HttpContext.Current.Request.IsAuthenticated;
+        }
     }
 }

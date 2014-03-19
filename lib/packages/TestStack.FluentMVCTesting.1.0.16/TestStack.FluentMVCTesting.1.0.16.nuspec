@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>TestStack.FluentMVCTesting</id>
+    <version>1.0.16</version>
+    <authors>Robert Moore,  TestStack</authors>
+    <owners>Robert Moore,  TestStack</owners>
+    <licenseUrl>https://github.com/TestStack/TestStack.FluentMVCTesting/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/TestStack/TestStack.FluentMVCTesting</projectUrl>
+    <iconUrl>https://raw.github.com/TestStack/TestStack.FluentMVCTesting/master/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple, terse, fluent unit testing of ASP.NET MVC Controllers.
+       ASP.NET MVC 4 version; install FluentMVCTesting.Mvc3 if you are using MVC 3.</description>
+    <language>en-US</language>
+    <tags>fluent mvc asp.net testing terse</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.Mvc" version="4.0" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

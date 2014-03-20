@@ -1,23 +1,24 @@
 ﻿using System;
-using System.Web;
+using System.Collections.Generic;
+using NSubstitute;
+using TestStack.FluentMVCTesting;
+using Xunit;
+
 using App.Entities;
 using App.Models.Passport;
 using App.ServicesInterface;
 using App.Tests.Utils;
 using App.WebUI.Controllers;
-using NSubstitute;
-using TestStack.FluentMVCTesting;
-using Xunit;
 
 namespace App.Tests.Controllers
 {
-    public class PassportControllerTester
+    public class PassportControllerTest
     {
         private readonly ILoginService _loginService;
         private readonly PassportController _controller;
         private readonly IUsersManageService _usersManageService;
 
-        public PassportControllerTester()
+        public PassportControllerTest()
         {
             this._loginService = Substitute.For<ILoginService>();
             this._usersManageService = Substitute.For<IUsersManageService>();
@@ -37,7 +38,6 @@ namespace App.Tests.Controllers
             const string password = "123456";
 
             this._loginService.Login(username, password, true).Returns(EmLoginValidStatus.Success);
-
             //get
             this._controller.WithCallTo(controller => controller.Login()).ShouldRenderView("Login");
 
@@ -87,28 +87,40 @@ namespace App.Tests.Controllers
 
             var accountSuccess = new Account() { DisplayName = modelSuccess.DisplayName, Password = modelSuccess.Password, UserName = modelSuccess.UserName };
             var accountExists = new Account() { DisplayName = modelExists.DisplayName, Password = modelExists.Password, UserName = modelExists.UserName };
+            
+            this._usersManageService.Register(
+                Arg.Is<Account>(
+                    a => a.DisplayName == accountSuccess.DisplayName && a.Password == accountSuccess.Password
+                         && a.UserName == accountSuccess.UserName && a.Id == accountSuccess.Id))
+                .Returns(EmRegisterStatus.Success);
 
-            var acTest = new Account()
-            {
-                DisplayName = accountSuccess.DisplayName,
-                Password = accountSuccess.Password,
-                UserName = accountSuccess.UserName,
-                Id = accountSuccess.Id
-            };
-
-            this._usersManageService.Register(accountSuccess).Returns(EmRegisterStatus.Success);
-            this._usersManageService.Register(accountExists).Returns(EmRegisterStatus.AccountExist);
-
-            Assert.Equal(this._controller.UserService.Register(acTest), EmRegisterStatus.Success);
-
+            this._usersManageService.Register(Arg.Is<Account>(
+                    a => a.DisplayName == accountExists.DisplayName && a.Password == accountExists.Password
+                         && a.UserName == accountExists.UserName && a.Id == accountExists.Id)).Returns(EmRegisterStatus.AccountExist);
+            
             this._controller.WithCallTo(c => c.Register(modelSuccess, "/")).ShouldRedirectTo("/");
-            this._controller.WithCallTo(c=>c.Register(modelExists, "/")).ShouldRenderView("Register").WithModel<RegisterModel>().AndNoModelErrors();
-            this._controller.WithCallTo(c => c.Register(modelUserNameError, "/"))
-                .ShouldRenderView("Register")
-                .WithModel<RegisterModel>()
-                .AndModelErrorFor(m => m.UserName)
-                .AndModelErrorFor(m => m.Password)
-                .AndModelErrorFor(m => m.DisplayName);
+            this._controller.WithCallTo(c => c.Register(modelExists, "/")).ShouldRenderView("Register");
+            this._controller.WithModelErrors().WithCallTo(c => c.Register(modelUserNameError, "/"))
+                .ShouldRenderView("Register");
+
+        }
+
+        [Fact]
+        public void Logout()
+        {
+            const string returnUrl = "/index";
+            this._controller.WithCallTo(c => c.Logout(returnUrl)).ShouldRedirectTo(returnUrl);
+            const string noReturnUrl = null;
+            this._controller.WithCallTo(c => c.Logout(noReturnUrl)).ShouldRedirectTo("/");
+
+        }
+
+        [Fact]
+        public void UserManage()
+        {
+            this._controller.WithCallTo(c => c.UserManage())
+                .ShouldRenderView("UserManage")
+                .WithModel<UserManageModel>();
 
         }
     }

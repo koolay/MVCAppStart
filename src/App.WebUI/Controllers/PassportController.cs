@@ -125,18 +125,17 @@ namespace App.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Logout()
+        public ActionResult Logout(string next)
         {
             this.LoginService.Logout();
-            string returnUrl = Request.QueryString["next"] ?? "/";
+            string returnUrl = next ?? "/";
             return Redirect(Url.Content(returnUrl));
         }
 
         [HttpGet, Authenticate]
         public ActionResult UserManage()
         {
-            var model = new UserManageModel();
-            model.UserList = this.UserService.GetAllUsers();
+            var model = new UserManageModel {UserList = this.UserService.GetAllUsers()};
             return View(model);
         }
 

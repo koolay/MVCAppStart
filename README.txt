@@ -5,6 +5,13 @@ Dependency:
 	ServiceStack == 3.9.70
 	NLog
 	lightInject
+	
+	NSubstitute 
+	http://nsubstitute.github.io/
+	
+	TestStack.FluentMVCTesting
+	https://github.com/TestStack/TestStack.FluentMVCTesting
+	
 
 	bootstrap
 	http://www.getbootstrap.com

@@ -89,7 +89,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PassportControllerTester.cs" />
+    <Compile Include="HomeControllerTest.cs" />
+    <Compile Include="PassportControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

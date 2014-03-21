@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Web.Mvc;
-using App.Utils;
-using ServiceStack.Configuration;
+
 using ServiceStack.Logging;
 using ServiceStack.MiniProfiler;
 using ServiceStack.Mvc.MiniProfiler;
 using ServiceStack.Mvc;
 using App.Filters;
 using App.Extensions;
-using App.Services;
+using App.ServicesInterface;
+using App.Utils;
 
 namespace App.WebUI.Controllers
 {
@@ -16,9 +16,10 @@ namespace App.WebUI.Controllers
     [ProfilingActionFilter]
     public abstract class AppControllerBase : ServiceStackController<CustomUserSession>
     {
-        public static AppConfig AppConfig { get; protected set; }
+        public static AppConfig AppConfig { get; set; }
         public static readonly ILog Logger = LogManager.GetLogger(typeof(AppControllerBase));
         protected Profiler CurProfiler = Profiler.Current;
+        public  ILoginService LoginService { get;  set; }
 
         public override string LoginRedirectUrl
         {

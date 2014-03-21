@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Runtime.Serialization;
 using ServiceStack.ServiceInterface.Auth;
 
-namespace App.Services
+namespace App.ServicesInterface
 {
+    [DataContract]
     public class CustomUserSession : AuthUserSession
     {
+        [DataMember]
         public string CustomId { get; set; }
     }
 }

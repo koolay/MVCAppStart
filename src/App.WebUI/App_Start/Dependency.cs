@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using App.Utils;
-using App.WebUI.LightInject;
+﻿
+using Funq;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
 using ServiceStack.Configuration;
 using ServiceStack.OrmLite;
 using ServiceStack.MiniProfiler.Data;
 using ServiceStack.MiniProfiler;
+using App.Utils;
 using App.Services;
 using App.ServicesInterface;
 using App.WebUI.Mailers;
@@ -18,7 +15,7 @@ namespace App.WebUI.App_Start
 {
     public static class Dependency
     {
-        internal static void Inject(ServiceContainer container, IResourceManager appSettings)
+        internal static void Inject(Container container, IResourceManager appSettings)
         {
             container.Register(c=>new AppConfig(appSettings));
             container.Register<ICacheClient>(c => new MemoryCacheClient());
@@ -27,7 +24,7 @@ namespace App.WebUI.App_Start
             container.Register<IUserMailer>(u => new UserMailer());
 
             //db connection
-            var connStr = container.GetInstance<AppConfig>().SqlserverConnectionString;
+            var connStr = container.Resolve<AppConfig>().SqlserverConnectionString;
             container.Register<IDbConnectionFactory>(
                 fac =>
                     new OrmLiteConnectionFactory(connStr,

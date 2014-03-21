@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Web.Mvc;
 
-using ServiceStack;
-using ServiceStack.WebHost.Endpoints;
 using ServiceStack.ServiceInterface;
-using ServiceStack.ServiceInterface.Auth;
-
+using ServiceStack.Common;
 using App.Extensions;
 using App.ServicesInterface;
 using App.Models.Passport;
 using App.Entities;
 using App.WebUI.Mailers;
 using App.Models.Email;
-using ServiceStack.Common;
-
 
 namespace App.WebUI.Controllers
 {
     public class PassportController : AppControllerBase
     {
         public IUsersManageService UserService { get; set; }
-        public ILoginService LoginService { get; set; }
+        
         public IUserMailer UserMailer { get; set; }
 
         [HttpPost]

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using App.Entities;
+﻿using App.Entities;
 
 namespace App.ServicesInterface
 {
@@ -11,5 +7,6 @@ namespace App.ServicesInterface
         EmLoginValidStatus Login(string username, string password, bool remember);
         bool IsLogined();
         void Logout();
+        CustomUserSession GetLoginedSession();
     }
 }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Web.Security;
 using System.Web;
 using ServiceStack;
+using ServiceStack.ServiceInterface;
 using ServiceStack.WebHost.Endpoints;
 using ServiceStack.ServiceInterface.Auth;
+using ServiceStack.Common.Web;
 using App.ServicesInterface;
 using App.Entities;
-using ServiceStack.Common.Web;
-using System.Web.Security;
 
 namespace App.Services
 {
@@ -48,15 +46,22 @@ namespace App.Services
         public void Logout()
         {
             var apiAuthService = AppHostBase.Resolve<AuthService>();
-            apiAuthService.RequestContext = System.Web.HttpContext.Current.ToRequestContext();
+            apiAuthService.RequestContext = HttpContext.Current.ToRequestContext();
             apiAuthService.Post(new Auth() { provider = "logout" });
             FormsAuthentication.SignOut();
         }
 
-
         public bool IsLogined()
         {
-           return  HttpContext.Current.Request.IsAuthenticated;
+            var key = SessionFeature.GetSessionKey() ?? "";
+            var user = Cache.Get<AuthUserSession>(key);
+            return user != null && user.IsAuthenticated;
+        }
+
+        public CustomUserSession GetLoginedSession()
+        {
+            var key = SessionFeature.GetSessionKey() ?? "";
+            return Cache.Get<CustomUserSession>(key);
         }
     }
 }

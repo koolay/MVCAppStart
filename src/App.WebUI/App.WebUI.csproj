@@ -161,8 +161,6 @@
     <Compile Include="App_Start\AppHost.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Dependency.cs" />
-    <Compile Include="App_Start\LightInjectContainerAdapter.cs" />
-    <Compile Include="App_Start\LightInjectControllerFactory.cs" />
     <Compile Include="Controllers\Api.cs" />
     <Compile Include="Controllers\AppControlerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -170,9 +168,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LightInject\LightInject.cs" />
-    <Compile Include="LightInject\Mvc\LightInject.Mvc.cs" />
-    <Compile Include="LightInject\Web\LightInject.Web.cs" />
     <Compile Include="Mailers\IUserMailer.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Mvc.Bundler.cs" />

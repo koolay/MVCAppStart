@@ -8,7 +8,7 @@ using ServiceStack.OrmLite;
 
 using App.Entities;
 
-namespace App.Services
+namespace App.ServicesInterface
 {
     public class CustomCredentialsAuthProvider : CredentialsAuthProvider
     {
@@ -30,7 +30,6 @@ namespace App.Services
         {
             return authService.TryResolve<IDbConnectionFactory>().OpenDbConnection();
         }
-        
 
         public override bool TryAuthenticate(IServiceBase authService, string userName, string password)
         {
@@ -56,7 +55,6 @@ namespace App.Services
             }
  
         }
-
 
         public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
         { 

@@ -81,9 +81,15 @@
       <Project>{3242352A-65C7-4CCA-B3B4-27CE5EC8F497}</Project>
       <Name>App.ServicesInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\App.Utils\App.Utils.csproj">
+      <Project>{10956737-14DE-4092-8DE4-338538F7688B}</Project>
+      <Name>App.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using App.Utils;
 using ServiceStack.Configuration;
 using ServiceStack.Logging;
 using ServiceStack.MiniProfiler;
@@ -15,7 +16,7 @@ namespace App.WebUI.Controllers
     [ProfilingActionFilter]
     public abstract class AppControllerBase : ServiceStackController<CustomUserSession>
     {
-        public static readonly AppSettings Settings = new AppSettings();
+        public static AppConfig AppConfig { get; protected set; }
         public static readonly ILog Logger = LogManager.GetLogger(typeof(AppControllerBase));
         protected Profiler CurProfiler = Profiler.Current;
 

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Data;
+using App.Utils;
 using ServiceStack.Configuration;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
@@ -15,7 +16,6 @@ using ServiceStack.OrmLite.SqlServer;
 using App.WebUI.Controllers;
 using App.Entities;
 using App.WebUI.LightInject;
-using App.WebUI.LightInject.Mvc;
 using App.Services;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(App.WebUI.App_Start.AppHost), "Start")]
@@ -24,12 +24,15 @@ namespace App.WebUI.App_Start
 {
 
 	public class AppHost: AppHostBase
-	{		
+	{
+	    private static AppConfig _appConfig;
+
 		public AppHost() : base("app host", typeof(AppControllerBase).Assembly) { }
 
 		public override void Configure(Funq.Container container)
 		{
             var appSettings = new AppSettings();
+            
             ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;         
        
             LogManager.LogFactory = new NLogFactory();           
@@ -52,7 +55,7 @@ namespace App.WebUI.App_Start
             }
         }
 
-        private void ConfigureAuth(AppSettingsBase appSettings)
+        private void ConfigureAuth(IResourceManager appSettings)
         {
            
             Plugins.Add(new AuthFeature(() => new CustomUserSession(),

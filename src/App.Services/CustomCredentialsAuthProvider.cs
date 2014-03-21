@@ -7,7 +7,6 @@ using ServiceStack.WebHost.Endpoints;
 using ServiceStack.OrmLite;
 
 using App.Entities;
-using System.Web.Security;
 
 namespace App.Services
 {
@@ -27,13 +26,13 @@ namespace App.Services
             }
         }
 
-        private IDbConnection GetDB(ServiceStack.ServiceInterface.IServiceBase authService)
+        private IDbConnection GetDB(IServiceBase authService)
         {
             return authService.TryResolve<IDbConnectionFactory>().OpenDbConnection();
         }
         
 
-        public override bool TryAuthenticate(ServiceStack.ServiceInterface.IServiceBase authService, string userName, string password)
+        public override bool TryAuthenticate(IServiceBase authService, string userName, string password)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
                 return false;
@@ -58,13 +57,8 @@ namespace App.Services
  
         }
 
-        public override object Authenticate(IServiceBase authService, IAuthSession session, Auth request)
-        {
-            return base.Authenticate(authService, session, request);
-        }
 
-        
-        public override void OnAuthenticated(ServiceStack.ServiceInterface.IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
+        public override void OnAuthenticated(IServiceBase authService, IAuthSession session, IOAuthTokens tokens, Dictionary<string, string> authInfo)
         { 
             //Important: You need to save the session!
             session.IsAuthenticated = true;

@@ -64,8 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomCredentialsAuthProvider.cs" />
-    <Compile Include="CustomUserSession.cs" />
+    <Compile Include="Common\CustomCredentialsAuthProvider.cs" />
+    <Compile Include="Common\CustomUserSession.cs" />
     <Compile Include="ILoginService.cs" />
     <Compile Include="IUsersManageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

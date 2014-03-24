@@ -1,14 +1,13 @@
-﻿using System.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
+using App.Entities;
 using ServiceStack.Configuration;
+using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.WebHost.Endpoints;
-using ServiceStack.OrmLite;
 
-using App.Entities;
-
-namespace App.ServicesInterface
+namespace App.ServicesInterface.Common
 {
     public class CustomCredentialsAuthProvider : CredentialsAuthProvider
     {

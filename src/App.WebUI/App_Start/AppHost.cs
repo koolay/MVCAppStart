@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Data;
 using App.ServicesInterface;
+using App.ServicesInterface.Common;
 using Funq;
 using ServiceStack.Configuration;
 using ServiceStack.Mvc;

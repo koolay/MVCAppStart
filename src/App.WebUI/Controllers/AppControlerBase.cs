@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-
+using App.ServicesInterface.Common;
 using ServiceStack.Logging;
 using ServiceStack.MiniProfiler;
 using ServiceStack.Mvc.MiniProfiler;

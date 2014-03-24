@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using ServiceStack.ServiceInterface.Auth;
 
-namespace App.ServicesInterface
+namespace App.ServicesInterface.Common
 {
     [DataContract]
     public class CustomUserSession : AuthUserSession

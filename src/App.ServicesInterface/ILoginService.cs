@@ -1,4 +1,5 @@
 ﻿using App.Entities;
+using App.ServicesInterface.Common;
 
 namespace App.ServicesInterface
 {

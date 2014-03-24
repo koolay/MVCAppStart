@@ -1,5 +1,6 @@
 ﻿using System.Web.Security;
 using System.Web;
+using App.ServicesInterface.Common;
 using ServiceStack;
 using ServiceStack.ServiceInterface;
 using ServiceStack.WebHost.Endpoints;

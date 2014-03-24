@@ -16,8 +16,7 @@ namespace App.WebUI.Controllers
     [ProfilingActionFilter]
     public abstract class AppControllerBase : ServiceStackController<CustomUserSession>
     {
-        public static AppConfig AppConfig { get; set; }
-        public static readonly ILog Logger = LogManager.GetLogger(typeof(AppControllerBase));
+        public readonly ILog Logger = LogManager.GetLogger(typeof(AppControllerBase));
         protected Profiler CurProfiler = Profiler.Current;
         public  ILoginService LoginService { get;  set; }
 

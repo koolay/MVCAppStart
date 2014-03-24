@@ -1,11 +1,15 @@
 ﻿
+using System.Web;
 using Funq;
+using ServiceStack;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
 using ServiceStack.Configuration;
 using ServiceStack.OrmLite;
 using ServiceStack.MiniProfiler.Data;
 using ServiceStack.MiniProfiler;
+using ServiceStack.ServiceHost;
+
 using App.Utils;
 using App.Services;
 using App.ServicesInterface;
@@ -17,11 +21,13 @@ namespace App.WebUI.App_Start
     {
         internal static void Inject(Container container, IResourceManager appSettings)
         {
-            container.Register(c=>new AppConfig(appSettings));
-            container.Register<ICacheClient>(c => new MemoryCacheClient());
-            container.Register<IUsersManageService>(s => new UsersManageService());
-            container.Register<ILoginService>(s => new LoginService());
-            container.Register<IUserMailer>(u => new UserMailer());
+            container.Register(c => HttpContext.Current.ToRequestContext().Get<IHttpRequest>());
+            container.Register(new AppConfig(appSettings));
+            container.Register<ICacheClient>(new MemoryCacheClient());
+
+            container.Register<IUsersManageService>(new UsersManageService());
+            container.Register<ILoginService>(new LoginService());
+            container.Register<IUserMailer>(new UserMailer());
 
             //db connection
             var connStr = container.Resolve<AppConfig>().SqlserverConnectionString;

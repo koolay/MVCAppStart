@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Data;
+using App.Services;
 using App.ServicesInterface;
 using App.ServicesInterface.Common;
 using Funq;
@@ -21,7 +22,7 @@ namespace App.WebUI.App_Start
 
 	public class AppHost: AppHostBase
 	{
-		public AppHost() : base("app host", typeof(AppControllerBase).Assembly) { }
+        public AppHost() : base("app host", typeof(AppServiceBase).Assembly) { }
 
 		public override void Configure(Container container)
 		{
@@ -36,7 +37,6 @@ namespace App.WebUI.App_Start
             this.ConfigureAuth(appSettings);
             this.InitDatabase(container);
             ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
-           
 		}
 
         private void InitDatabase(Container container)
@@ -50,6 +50,7 @@ namespace App.WebUI.App_Start
 
         private void ConfigureAuth(IResourceManager appSettings)
         {
+            Plugins.Add(new SessionFeature());
             Plugins.Add(new AuthFeature(() => new CustomUserSession(),
                 new IAuthProvider[] { 
                     new CustomCredentialsAuthProvider(appSettings), 

@@ -15,6 +15,7 @@ namespace App.Services
     {
         public EmLoginValidStatus Login(string username, string password, bool remember)
         {
+            
             var authService = AppHostBase.Resolve<AuthService>();
             authService.RequestContext = System.Web.HttpContext.Current.ToRequestContext();
             try

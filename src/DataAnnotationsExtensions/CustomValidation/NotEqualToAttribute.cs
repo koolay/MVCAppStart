@@ -1,0 +1,68 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using App.Extensions;
+using DataAnnotationsExtensions.Resources;
+
+namespace DataAnnotationsExtensions.CustomValidation
+{
+    /// <summary>
+    /// Validates that the property has the same value as the given 'otherProperty' 
+    /// </summary>
+    /// <remarks>
+    /// From Mvc3 Futures
+    /// </remarks>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class NotEqualToAttribute : ValidationAttribute
+    {
+        public NotEqualToAttribute(string otherProperty)
+        {
+            if (otherProperty == null)
+            {
+                throw new ArgumentNullException("otherProperty");
+            }
+            OtherProperty = otherProperty;
+            OtherPropertyDisplayName = null;
+        }
+
+        public string OtherProperty { get; private set; }
+
+        public string OtherPropertyDisplayName { get; set; }
+
+        public override string FormatErrorMessage(string name)
+        {
+
+            var otherPropertyDisplayName = OtherPropertyDisplayName ?? OtherProperty;
+
+            return GlobalizationHelper.Translation("PasswordCouldNotBeSameAsUsername");
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var memberNames = new[] { validationContext.MemberName };
+
+            PropertyInfo otherPropertyInfo = validationContext.ObjectType.GetProperty(OtherProperty);
+            if (otherPropertyInfo == null)
+            {
+                return new ValidationResult(String.Format(CultureInfo.CurrentCulture, ValidatorResources.EqualTo_UnknownProperty, OtherProperty), memberNames);
+            }
+
+            var displayAttribute =
+                otherPropertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+
+            if (displayAttribute != null && !string.IsNullOrWhiteSpace(displayAttribute.Name))
+            {
+                OtherPropertyDisplayName = displayAttribute.Name;
+            }
+
+            object otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            if (Equals(value, otherPropertyValue))
+            {
+                return new ValidationResult(FormatErrorMessage(validationContext.DisplayName), memberNames);
+            }
+            return null;
+        }
+    }
+}

@@ -2,4 +2,7 @@
 ../js/icheck.js
 ../js/jqBootstrapValidation.js
 ../js/bucket.js
+../js/jquery.validate.js
+../js/jquery.validate.unobtrusive.js
+../js/validations.js
 ../js/app.js

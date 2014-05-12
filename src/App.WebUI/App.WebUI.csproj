@@ -158,6 +158,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\AppResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AppHost.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Dependency.cs" />
@@ -848,8 +853,13 @@
     <Content Include="Content\js\jqBootstrapValidation.js" />
     <Content Include="Content\js\jquery-migrate-1.2.1.js" />
     <Content Include="Content\js\jquery.min.js" />
+    <Content Include="Content\js\jquery.validate.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\js\jquery.widget.min.js" />
     <Content Include="Content\js\respond.min.js" />
+    <Content Include="Content\js\validations.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1081,6 +1091,13 @@
     <Content Include="Views\UserMailer\_Layout.cshtml" />
     <Content Include="Views\UserMailer\PasswordResetMail.cshtml" />
     <Content Include="Views\Passport\ResetPassword.cshtml" />
+    <None Include="Content\js\jquery-1.10.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\AppResource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -2,22 +2,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Sign In"; 
 }
+@using FormMethod = System.Web.Mvc.FormMethod
 @model App.Models.Passport.LoginModel
 
 <fieldset class="col-xs-4">
     <legend>Sign In</legend>
     <div>
-        <form class="form" method="post" >
+    @using (Html.BeginForm("Login", "Passport", FormMethod.Post, new {@class = "form"}))
+    {
             <div class="form-group">
                 <label for="txtLangCode" class="control-label">
                     username</label> 
-                <input type="text" class="form-control"  name="UserName" required/>
-                
+                @Html.TextBoxFor(m=>m.UserName,new{@class="form-control"})
+                @Html.ValidationMessageFor(m=>m.UserName)
             </div>
             <div class="form-group">
                 <label for="txtLangCode" class="control-label">
                     Password</label> 
-                    <input type="password"  class="form-control"  name="Password" required/> 
+                    @Html.PasswordFor(m=>m.Password,new{ @class="form-control"})
+                    @Html.ValidationMessageFor(m=>m.Password)
             </div>
             <div class="checkbox">
             <label>
@@ -29,6 +32,6 @@
                     <button type="submit" class="btn btn-primary" id="btnSubmit">
                         Log in</button>  
              </div>
-        </form>
+     }
     </div>
 </fieldset>

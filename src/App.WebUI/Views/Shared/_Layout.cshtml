@@ -6,7 +6,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Html.RenderCssBundle("~/Content/bundler/app.css.bundle", BundleOptions.Normal)
+    @(Request.IsLocal ? Html.RenderCssBundle("~/Content/bundler/app.css.bundle", BundleOptions.Normal) : Html.RenderCssBundle("~/Content/bundler/app.css.bundle", BundleOptions.MinifiedAndCombined))
     @Html.Partial("HeadContainer")
     @RenderSection("Style", required: false)
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,7 +39,7 @@
     <script src="~/Content/js/jquery-migrate-1.2.1.js" type="text/javascript"></script>
     <script src="~/Content/js/jquery.widget.min.js" type="text/javascript"></script>
     <script src="~/Content/js/respond.min.js" type="text/javascript"></script>
-    @Html.RenderJsBundle("~/Content/bundler/app.js.bundle", BundleOptions.MinifiedAndCombined)
+    @(Request.IsLocal ? Html.RenderJsBundle("~/Content/bundler/app.js.bundle", BundleOptions.Normal) : Html.RenderJsBundle("~/Content/bundler/app.js.bundle", BundleOptions.MinifiedAndCombined))
     <script type="text/javascript">
         $(document).ready(function () {
             $('input').iCheck({

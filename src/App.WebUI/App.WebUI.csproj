@@ -1076,6 +1076,7 @@
     <None Include="bundler\node_modules\stylus\package.json" />
     <None Include="bundler\node_modules\stylus\Readme.md" />
     <None Include="bundler\uglifyjs" />
+    <Content Include="Configs\AppSettings.config" />
     <None Include="Content\bundler\app.css.bundle" />
     <None Include="Content\bundler\app.js.bundle" />
     <None Include="Content\css\icheck-minimal\Thumbs.db" />

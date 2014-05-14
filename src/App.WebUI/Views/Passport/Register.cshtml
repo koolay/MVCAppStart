@@ -1,36 +1,41 @@
-﻿@{
+﻿@using FormMethod = System.Web.Mvc.FormMethod
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Join In"; 
 }
+@model App.Models.Passport.RegisterModel
 
 <fieldset class="col-md-8">
     <legend>Join In</legend>
     <div>
-        <form class="form" method="post">
+    @using (Html.BeginForm("Register", "Passport", FormMethod.Post, new {@class = "form"}))
+    {
             <div class="form-group">
-                <label  class="control-label">
-                    username</label> 
-                <input type="text" class="form-control"  name="UserName" required/>                
+                <label  class="control-label">username</label> 
+                @Html.TextBoxFor(m=>m.UserName,new{@class="form-control"})
+                @Html.ValidationMessageFor(m=>m.UserName)
             </div>
             <div class="form-group">
                 <label  class="control-label">
                     displayName</label> 
-                <input type="text" class="form-control"  name="DisplayName" required/>                
+                    @Html.TextBoxFor(m=>m.DisplayName,new{@class="form-control"})
+                    @Html.ValidationMessageFor(m=>m.DisplayName)
             </div>
             <div class="form-group">
                 <label  class="control-label">
                     Password</label> 
-                    <input type="password"  class="form-control"  name="Password" required/> 
+                    @Html.PasswordFor(m=>m.Password,new{@class="form-control"})
+                    @Html.ValidationMessageFor(m=>m.Password)
             </div>
              <div class="form-group">
                 <label  class="control-label">
                    Confirm  Password</label> 
-                    <input type="password"  class="form-control"  name="ConfirmPassword" required/> 
+                   @Html.PasswordFor(m=>m.ConfirmPassword,new{@class="form-control"})
+                   @Html.ValidationMessageFor(m=>m.ConfirmPassword)
             </div>
              <div class="form-group"> 
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">
-                        Sign up</button>  
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Sign up</button>  
              </div>
-        </form>
+       }
     </div>
 </fieldset>

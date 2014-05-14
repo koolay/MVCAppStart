@@ -2,3 +2,4 @@
 #body{ margin-top:40px; min-height:600px;}
 #footer{ margin-top:100px;}
 .alert .tip-line{ margin:0; }
+.field-validation-error{ color: red;display: inherit;}
